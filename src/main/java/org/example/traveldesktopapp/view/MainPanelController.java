@@ -3,7 +3,7 @@ package org.example.traveldesktopapp.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class MainPanelController {
     @FXML
     private Label welcomeText;
 
