@@ -2,15 +2,20 @@
     -fx-background-color: #112D4E;
 }
 
+
 .side_bar{
     -fx-background-color: #DBE2EF;
     -fx-background-radius: 0px 30px 30px 0px;
 
 }
+
+
 .home_panel{
     -fx-background-color: #DBE2EF;
     -fx-background-radius: 30px 30px 30px 30px;
 }
+
+
 .list_of_files {
     -fx-background-color: #DBE2EF; /* Kolor domyślnego tła */
     -fx-background-radius: 30px 30px 0px 0px; /* Zaokrąglone górne rogi */
@@ -21,6 +26,46 @@
     -fx-font-family: "Arial"; /* Czcionka */
     -fx-text-fill: #3F72AF; /* Kolor tekstu */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2); /* Delikatny cień */
+}
+
+.list_of_files .list-cell {
+    -fx-background-color: transparent; /* Przezroczyste tło komórek */
+    -fx-text-fill: #3F72AF; /* Kolor tekstu */
+    -fx-font-size: 16px; /* Rozmiar tekstu */
+    -fx-font-weight: bold; /* Pogrubienie tekstu */
+    -fx-padding: 10px; /* Odstępy wewnętrzne */
+    -fx-background-radius: 5px; /* Zaokrąglone narożniki */
+    -fx-border-color: #112D4E; /* Kolor obramowania komórek */
+    -fx-border-width: 1px; /* Szerokość obramowania */
+    -fx-border-radius: 5px; /* Dopasowanie zaokrąglenia */
+}
+
+.list_of_files .list-cell:hover {
+    -fx-background-color: #3F72AF; /* Kolor tła po najechaniu */
+    -fx-text-fill: #F9F7F7; /* Jasny kolor tekstu po najechaniu */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 3); /* Mocniejszy cień */
+}
+
+.list_of_files .scroll-bar {
+    -fx-background-color: transparent; /* Przezroczyste tło */
+}
+
+.list_of_files .scroll-bar:vertical {
+    -fx-pref-width: 12px; /* Szerokość pionowego paska przewijania */
+}
+
+.list_of_files .scroll-bar .thumb {
+    -fx-background-color: #3F72AF; /* Kolor uchwytu przewijania */
+    -fx-background-radius: 5px; /* Zaokrąglenie uchwytu */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0, 0, 2); /* Cień uchwytu */
+}
+
+.list_of_files .scroll-bar .thumb:hover {
+    -fx-background-color: #112D4E; /* Ciemniejszy kolor uchwytu przy najechaniu */
+}
+
+.list_of_files .scroll-bar .track {
+    -fx-background-color: #F9F7F7; /* Tło ścieżki przewijania */
 }
 
 

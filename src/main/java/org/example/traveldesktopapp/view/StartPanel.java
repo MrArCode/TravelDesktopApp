@@ -2,6 +2,8 @@ package org.example.traveldesktopapp.view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,7 +39,7 @@ public class StartPanel {
         System.out.println("Home icon clicked!");
     }
     @FXML
-    private ListView<?> list_of_files;
+    private ListView<String> list_of_files;
 
     @FXML
     private Button load_file_button;
@@ -76,6 +78,16 @@ public class StartPanel {
         addHoverEffect(home_icon);
         addHoverEffect(add_icon);
         setupDragAndDrop();
+
+
+        ObservableList<String> fileNames = FXCollections.observableArrayList(
+                "example1.txt",
+                "example2.txt",
+                "example2.txt",
+                "example2.txt",
+                "example3.txt"
+        );
+        list_of_files.setItems(fileNames);
     }
 
     private void addHoverEffect(ImageView icon) {
