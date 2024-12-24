@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass="parent" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass="parent" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.traveldesktopapp.view.StartPanel">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="45.0" styleClass="side_bar" BorderPane.alignment="CENTER">
          <children>
@@ -21,7 +21,7 @@
                   <Insets right="5.0" top="5.0" />
                </padding>
             </VBox>
-            <ImageView fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="home_icon" fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="210.0" onMouseClicked="#homeOnClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@css/home_icon.png" />
                </image>
