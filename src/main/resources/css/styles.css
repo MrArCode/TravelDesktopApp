@@ -16,7 +16,6 @@
 }
 
 
-/* Styl dla ListView */
 .list_of_files {
     -fx-background-color: #DBE2EF; /* Jasne tło listy */
     -fx-background-radius: 30px 30px 30px 30px; /* Zaokrąglone narożniki */
@@ -26,7 +25,6 @@
 
 }
 
-/* Styl dla komórek listy */
 .list_of_files .list-cell {
     -fx-background-color: #DBE2EF; /* Białe tło każdej komórki */
     -fx-text-fill: #3F72AF; /* Kolor tekstu */
@@ -41,7 +39,6 @@
     -fx-transition: all 0.3s ease; /* Płynne przejścia stylów */
 }
 
-/* Styl dla komórek listy po najechaniu */
 .list_of_files .list-cell:hover {
     -fx-background-color: #E3F2FD; /* Subtelny kolor podświetlenia */
     -fx-text-fill: #1565C0; /* Intensywniejszy kolor tekstu po najechaniu */
@@ -50,17 +47,14 @@
     -fx-border-width: 1px; /* Pojawia się cienkie obramowanie */
 }
 
-/* Styl dla paska przewijania */
 .list_of_files .scroll-bar {
     -fx-background-color: transparent; /* Przezroczyste tło */
 }
 
-/* Pionowy pasek przewijania */
 .list_of_files .scroll-bar:vertical {
     -fx-pref-width: 12px; /* Szerokość pionowego paska */
 }
 
-/* Styl uchwytu paska przewijania */
 .list_of_files .scroll-bar .thumb {
     -fx-background-color: #64B5F6; /* Subtelny kolor uchwytu */
     -fx-background-radius: 6px; /* Zaokrąglony uchwyt */
@@ -68,13 +62,11 @@
     -fx-transition: all 0.3s ease; /* Płynne przejścia */
 }
 
-/* Styl uchwytu po najechaniu */
 .list_of_files .scroll-bar .thumb:hover {
     -fx-background-color: #1565C0; /* Intensywniejszy kolor uchwytu */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 3); /* Mocniejszy cień */
 }
 
-/* Styl ścieżki paska przewijania */
 .list_of_files .scroll-bar .track {
     -fx-background-color: #E0E0E0; /* Jasne tło ścieżki */
     -fx-background-radius: 6px; /* Dopasowanie do uchwytu */

@@ -42,6 +42,12 @@ public class StartPanel {
     @FXML
     private Button load_file_button;
 
+
+    @FXML
+    void onLoadFilesClicked(MouseEvent event) {
+        list_of_files.getItems().clear();
+    }
+
     // Obsługa kliknięcia ikony "Home"
     @FXML
     void onHomeOnClicked(MouseEvent event) {
@@ -105,7 +111,6 @@ public class StartPanel {
         addHoverEffect(home_icon);
         addHoverEffect(add_icon);
         setupDragAndDrop();
-        setupListView();
     }
 
     // Dodanie efektów najechania na ikony
@@ -169,11 +174,12 @@ public class StartPanel {
     private void handleFileDrop(DragEvent event) {
         Dragboard dragboard = event.getDragboard();
         if (dragboard.hasFiles()) {
-            File file = dragboard.getFiles().get(0);
-            if (file.getName().endsWith(".txt")) {
-                handleTextFile(file);
-            } else {
-                showAlert("Nieprawidłowy plik", "Proszę upuścić plik tekstowy (.txt).");
+            for (File file : dragboard.getFiles()) {
+                if (file.getName().endsWith(".txt")) {
+                    handleTextFile(file); // Przetwarzaj każdy plik tekstowy
+                } else {
+                    showAlert("Nieprawidłowy plik", "Pominięto plik: " + file.getName() + ". Akceptowane są tylko pliki tekstowe (.txt).");
+                }
             }
         }
         drag_and_drop_icon.setEffect(null);
@@ -181,26 +187,17 @@ public class StartPanel {
         event.consume();
     }
 
+
     // Obsługa pliku tekstowego
     private void handleTextFile(File file) {
         try {
             String content = Files.readString(file.toPath());
-            list_of_files.getItems().add(file.getName());
-            showAlert("Zawartość pliku", content);
+            list_of_files.getItems().add(file.getName()); // Dodaj nazwę pliku do listy
         } catch (IOException e) {
             showAlert("Błąd", "Nie udało się odczytać pliku: " + e.getMessage());
         }
     }
 
-    // Konfiguracja ListView
-    private void setupListView() {
-        ObservableList<String> fileNames = FXCollections.observableArrayList(
-                "example1.txt",
-                "example2.txt",
-                "example3.txt"
-        );
-        list_of_files.setItems(fileNames);
-    }
 
     // Tworzenie efektu skalowania
     private ScaleTransition createScaleTransition(Node node, double scale) {
