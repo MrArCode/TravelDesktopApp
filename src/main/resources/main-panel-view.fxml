@@ -21,12 +21,12 @@
                   <Insets right="5.0" top="5.0" />
                </padding>
             </VBox>
-            <ImageView fx:id="home_icon" fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="210.0" onMouseClicked="#homeOnClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="home_icon" fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="210.0" onMouseClicked="#onHomeOnClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@css/home_icon.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="add_icon" fitHeight="40.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#onAddClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@css/add_icon.png" />
                </image>
@@ -40,6 +40,10 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" BorderPane.alignment="CENTER" />
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" BorderPane.alignment="CENTER">
+         <ImageView fx:id="drag_and_drop_icon" fitHeight="300.0" fitWidth="400.0" layoutX="332.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@css/drag_and_drop.png" />
+         </ImageView>
+      </AnchorPane>
    </center>
 </BorderPane>
