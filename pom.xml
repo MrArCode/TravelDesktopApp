@@ -26,6 +26,15 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>charm-glisten</id>
+            <name>charm-glisten Repository</name>
+            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <dependencies>
 
 
@@ -34,6 +43,14 @@
             <artifactId>materialfx</artifactId>
             <version>11.17.0</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>charm-glisten</artifactId>
+            <version>6.2.2</version>
+        </dependency>
+
 
         <!-- JavaFX Dependencies -->
         <dependency>
