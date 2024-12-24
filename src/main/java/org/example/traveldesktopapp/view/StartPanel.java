@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -34,6 +35,9 @@ public class StartPanel {
     private ImageView add_icon;
 
     @FXML
+    private ImageView table_icon;
+
+    @FXML
     private ImageView drag_and_drop_icon;
 
     @FXML
@@ -41,6 +45,9 @@ public class StartPanel {
 
     @FXML
     private Button load_file_button;
+
+    @FXML
+    private TableView<?> table;
 
 
     @FXML
@@ -57,9 +64,29 @@ public class StartPanel {
     // Obsługa kliknięcia ikony "Add"
     @FXML
     void onAddClicked(MouseEvent event) {
+
+        if(table.isVisible()){
+            toggleVisibility(table);
+        }
+
         toggleVisibility(drag_and_drop_icon);
         toggleVisibility(list_of_files);
         toggleVisibility(load_file_button);
+    }
+
+    @FXML
+    void onTableIconClicked(MouseEvent event) {
+        if(drag_and_drop_icon.isVisible() || list_of_files.isVisible() || load_file_button.isVisible()){
+            toggleVisibility(drag_and_drop_icon);
+            toggleVisibility(list_of_files);
+            toggleVisibility(load_file_button);
+        }
+
+        if (table.isVisible()) {
+            fadeOut(table);
+        } else {
+            fadeInWithSlideAndScale(table);
+        }
     }
 
     // Metoda do zmiany widoczności elementów z animacją
@@ -110,6 +137,7 @@ public class StartPanel {
     public void initialize() {
         addHoverEffect(home_icon);
         addHoverEffect(add_icon);
+        addHoverEffect(table_icon);
         setupDragAndDrop();
     }
 
@@ -187,7 +215,6 @@ public class StartPanel {
         event.consume();
     }
 
-
     // Obsługa pliku tekstowego
     private void handleTextFile(File file) {
         try {
@@ -197,7 +224,6 @@ public class StartPanel {
             showAlert("Błąd", "Nie udało się odczytać pliku: " + e.getMessage());
         }
     }
-
 
     // Tworzenie efektu skalowania
     private ScaleTransition createScaleTransition(Node node, double scale) {
