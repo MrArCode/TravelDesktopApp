@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass="parent" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.traveldesktopapp.view.StartPanel">
    <left>
@@ -41,9 +44,15 @@
    </left>
    <center>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" BorderPane.alignment="CENTER">
-         <ImageView fx:id="drag_and_drop_icon" fitHeight="300.0" fitWidth="400.0" layoutX="332.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <ImageView fx:id="drag_and_drop_icon" fitHeight="300.0" fitWidth="400.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@css/drag_and_drop.png" />
          </ImageView>
+         <Button fx:id="load_file_button" alignment="CENTER" contentDisplay="CENTER" layoutX="393.0" layoutY="507.0" mnemonicParsing="false" styleClass="load_file_button" text="Load Files" textAlignment="CENTER" textFill="#3f72af" textOverrun="CLIP">
+            <font>
+               <Font name="Arial" size="18.0" />
+            </font>
+         </Button>
+         <ListView fx:id="list_of_files" layoutX="764.0" layoutY="19.0" prefHeight="581.0" prefWidth="200.0" styleClass="list_of_files" />
       </AnchorPane>
    </center>
 </BorderPane>

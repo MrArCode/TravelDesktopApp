@@ -2,8 +2,12 @@ package org.example.traveldesktopapp.view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -32,22 +36,39 @@ public class StartPanel {
     void onHomeOnClicked(MouseEvent event) {
         System.out.println("Home icon clicked!");
     }
+    @FXML
+    private ListView<?> list_of_files;
+
+    @FXML
+    private Button load_file_button;
 
     @FXML
     void onAddClicked(MouseEvent event) {
         if (drag_and_drop_icon.isVisible()) {
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), drag_and_drop_icon);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(_ -> drag_and_drop_icon.setVisible(false));
-            fadeOut.play();
+            changeVisibilityON(drag_and_drop_icon);
+            changeVisibilityON(list_of_files);
+            changeVisibilityON(load_file_button);
         } else {
-            drag_and_drop_icon.setVisible(true);
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), drag_and_drop_icon);
-            fadeIn.setFromValue(0.0);
-            fadeIn.setToValue(1.0);
-            fadeIn.play();
+            changeVisibilityOFF(drag_and_drop_icon);
+            changeVisibilityOFF(list_of_files);
+            changeVisibilityOFF(load_file_button);
         }
+    }
+
+    public void changeVisibilityON(Node element){
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), element);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished(_ -> element.setVisible(false));
+        fadeOut.play();
+    }
+
+    public void changeVisibilityOFF(Node element){
+        element.setVisible(true);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(300), element);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
     }
 
     @FXML
