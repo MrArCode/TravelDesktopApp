@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -25,9 +24,7 @@ import java.nio.file.Files;
 
 public class StartPanel {
 
-    @FXML
-    private ImageView drag_and_drop_icon;
-
+    // Komponenty FXML
     @FXML
     private ImageView home_icon;
 
@@ -35,29 +32,38 @@ public class StartPanel {
     private ImageView add_icon;
 
     @FXML
-    void onHomeOnClicked(MouseEvent event) {
-        System.out.println("Home icon clicked!");
-    }
+    private ImageView drag_and_drop_icon;
+
     @FXML
     private ListView<String> list_of_files;
 
     @FXML
     private Button load_file_button;
 
+    // Obsługa kliknięcia ikony "Home"
+    @FXML
+    void onHomeOnClicked(MouseEvent event) {
+        System.out.println("Home icon clicked!");
+    }
+
+    // Obsługa kliknięcia ikony "Add"
     @FXML
     void onAddClicked(MouseEvent event) {
-        if (drag_and_drop_icon.isVisible()) {
-            changeVisibilityON(drag_and_drop_icon);
-            changeVisibilityON(list_of_files);
-            changeVisibilityON(load_file_button);
+        toggleVisibility(drag_and_drop_icon);
+        toggleVisibility(list_of_files);
+        toggleVisibility(load_file_button);
+    }
+
+    // Metoda do zmiany widoczności elementów z animacją
+    private void toggleVisibility(Node element) {
+        if (element.isVisible()) {
+            fadeOut(element);
         } else {
-            changeVisibilityOFF(drag_and_drop_icon);
-            changeVisibilityOFF(list_of_files);
-            changeVisibilityOFF(load_file_button);
+            fadeIn(element);
         }
     }
 
-    public void changeVisibilityON(Node element){
+    private void fadeOut(Node element) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), element);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
@@ -65,7 +71,7 @@ public class StartPanel {
         fadeOut.play();
     }
 
-    public void changeVisibilityOFF(Node element){
+    private void fadeIn(Node element) {
         element.setVisible(true);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(300), element);
         fadeIn.setFromValue(0.0);
@@ -73,23 +79,16 @@ public class StartPanel {
         fadeIn.play();
     }
 
+    // Inicjalizacja komponentów i logiki
     @FXML
     public void initialize() {
         addHoverEffect(home_icon);
         addHoverEffect(add_icon);
         setupDragAndDrop();
-
-
-        ObservableList<String> fileNames = FXCollections.observableArrayList(
-                "example1.txt",
-                "example2.txt",
-                "example2.txt",
-                "example2.txt",
-                "example3.txt"
-        );
-        list_of_files.setItems(fileNames);
+        setupListView();
     }
 
+    // Dodanie efektów najechania na ikony
     private void addHoverEffect(ImageView icon) {
         ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), icon);
         scaleUp.setToX(1.2);
@@ -115,73 +114,84 @@ public class StartPanel {
         });
     }
 
+    // Konfiguracja obsługi Drag and Drop
     private void setupDragAndDrop() {
         DropShadow activeShadow = new DropShadow();
         activeShadow.setColor(Color.LIGHTBLUE);
         activeShadow.setRadius(15);
 
-        // Tworzenie płynnego powiększenia
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(500), drag_and_drop_icon);
-        scaleUp.setToX(1.3);
-        scaleUp.setToY(1.3);
-        scaleUp.setInterpolator(javafx.animation.Interpolator.EASE_BOTH); // Płynna interpolacja
+        ScaleTransition scaleUp = createScaleTransition(drag_and_drop_icon, 1.3);
+        ScaleTransition scaleDown = createScaleTransition(drag_and_drop_icon, 1.0);
 
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(500), drag_and_drop_icon);
-        scaleDown.setToX(1.0);
-        scaleDown.setToY(1.0);
-        scaleDown.setInterpolator(javafx.animation.Interpolator.EASE_BOTH); // Płynna interpolacja
-
-        // Obsługa przeciągania nad ikoną
         drag_and_drop_icon.setOnDragOver(event -> {
-            Dragboard dragboard = event.getDragboard();
-            if (dragboard.hasFiles() && dragboard.getFiles().stream().anyMatch(file -> file.getName().endsWith(".txt"))) {
+            if (isValidFile(event)) {
                 event.acceptTransferModes(TransferMode.COPY);
                 drag_and_drop_icon.setEffect(activeShadow);
-                if (!scaleUp.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
-                    scaleUp.playFromStart(); // Płynne powiększenie
-                }
+                scaleUp.playFromStart();
             }
             event.consume();
         });
 
-        // Obsługa opuszczenia obszaru przeciągania
         drag_and_drop_icon.setOnDragExited(event -> {
             drag_and_drop_icon.setEffect(null);
-            if (!scaleDown.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
-                scaleDown.playFromStart(); // Płynne zmniejszenie
-            }
+            scaleDown.playFromStart();
             event.consume();
         });
 
-        // Obsługa upuszczania plików na ikonę
-        drag_and_drop_icon.setOnDragDropped(event -> {
-            Dragboard dragboard = event.getDragboard();
-            if (dragboard.hasFiles()) {
-                File file = dragboard.getFiles().get(0);
-                if (file.getName().endsWith(".txt")) {
-                    handleTextFile(file);
-                } else {
-                    showAlert("Nieprawidłowy plik", "Proszę upuścić plik tekstowy (.txt).");
-                }
-            }
-            drag_and_drop_icon.setEffect(null);
-            scaleDown.playFromStart();
-            event.setDropCompleted(true);
-            event.consume();
-        });
+        drag_and_drop_icon.setOnDragDropped(this::handleFileDrop);
     }
 
+    private boolean isValidFile(DragEvent event) {
+        Dragboard dragboard = event.getDragboard();
+        return dragboard.hasFiles() && dragboard.getFiles().stream().anyMatch(file -> file.getName().endsWith(".txt"));
+    }
+
+    private void handleFileDrop(DragEvent event) {
+        Dragboard dragboard = event.getDragboard();
+        if (dragboard.hasFiles()) {
+            File file = dragboard.getFiles().get(0);
+            if (file.getName().endsWith(".txt")) {
+                handleTextFile(file);
+            } else {
+                showAlert("Nieprawidłowy plik", "Proszę upuścić plik tekstowy (.txt).");
+            }
+        }
+        drag_and_drop_icon.setEffect(null);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+
+    // Obsługa pliku tekstowego
     private void handleTextFile(File file) {
         try {
             String content = Files.readString(file.toPath());
-            System.out.println("Zawartość pliku:\n" + content);
+            list_of_files.getItems().add(file.getName());
             showAlert("Zawartość pliku", content);
         } catch (IOException e) {
-            e.printStackTrace();
             showAlert("Błąd", "Nie udało się odczytać pliku: " + e.getMessage());
         }
     }
 
+    // Konfiguracja ListView
+    private void setupListView() {
+        ObservableList<String> fileNames = FXCollections.observableArrayList(
+                "example1.txt",
+                "example2.txt",
+                "example3.txt"
+        );
+        list_of_files.setItems(fileNames);
+    }
+
+    // Tworzenie efektu skalowania
+    private ScaleTransition createScaleTransition(Node node, double scale) {
+        ScaleTransition transition = new ScaleTransition(Duration.millis(500), node);
+        transition.setToX(scale);
+        transition.setToY(scale);
+        transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+        return transition;
+    }
+
+    // Wyświetlanie alertu
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

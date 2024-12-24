@@ -44,10 +44,10 @@
    </left>
    <center>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" BorderPane.alignment="CENTER">
-         <ImageView fx:id="drag_and_drop_icon" fitHeight="300.0" fitWidth="400.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="drag_and_drop_icon" fitHeight="300.0" fitWidth="400.0" layoutX="272.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@css/drag_and_drop.png" />
          </ImageView>
-         <Button fx:id="load_file_button" alignment="CENTER" contentDisplay="CENTER" layoutX="393.0" layoutY="507.0" mnemonicParsing="false" styleClass="load_file_button" text="Load Files" textAlignment="CENTER" textFill="#3f72af" textOverrun="CLIP">
+         <Button fx:id="load_file_button" alignment="CENTER" contentDisplay="CENTER" layoutX="365.0" layoutY="508.0" mnemonicParsing="false" styleClass="load_file_button" text="Load Files" textAlignment="CENTER" textFill="#3f72af" textOverrun="CLIP">
             <font>
                <Font name="Arial" size="18.0" />
             </font>
