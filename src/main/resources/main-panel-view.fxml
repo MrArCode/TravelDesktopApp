@@ -5,11 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="233.0" prefWidth="317.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="org.example.traveldesktopapp.view.MainPanelController">
+<VBox alignment="CENTER" prefHeight="233.0" prefWidth="317.0" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.traveldesktopapp.view.MainPanelController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <Label fx:id="welcomeText" />
+   <Button mnemonicParsing="false" text="Button" />
     <Button onAction="#onHelloButtonClick" text="Chuj" />
 </VBox>
