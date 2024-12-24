@@ -1,7 +1,9 @@
 package org.example.traveldesktopapp.view;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -59,7 +61,7 @@ public class StartPanel {
         if (element.isVisible()) {
             fadeOut(element);
         } else {
-            fadeIn(element);
+            fadeInWithSlideAndScale(element);
         }
     }
 
@@ -71,13 +73,31 @@ public class StartPanel {
         fadeOut.play();
     }
 
-    private void fadeIn(Node element) {
+    private void fadeInWithSlideAndScale(Node element) {
         element.setVisible(true);
+
+        // Fade Transition
         FadeTransition fadeIn = new FadeTransition(Duration.millis(300), element);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
-        fadeIn.play();
+
+        // Translate Transition
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), element);
+        slideIn.setFromX(-300);
+        slideIn.setToX(0);
+
+        // Scale Transition
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(300), element);
+        scaleUp.setFromX(0.5);
+        scaleUp.setFromY(0.5);
+        scaleUp.setToX(1.0);
+        scaleUp.setToY(1.0);
+
+        // Combine All Transitions
+        ParallelTransition combined = new ParallelTransition(fadeIn, slideIn, scaleUp);
+        combined.play();
     }
+
 
     // Inicjalizacja komponentów i logiki
     @FXML

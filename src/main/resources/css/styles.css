@@ -16,57 +16,70 @@
 }
 
 
+/* Styl dla ListView */
 .list_of_files {
-    -fx-background-color: #DBE2EF; /* Kolor domyślnego tła */
-    -fx-background-radius: 30px 30px 0px 0px; /* Zaokrąglone górne rogi */
-    -fx-padding: 10px; /* Odstępy wewnętrzne */
-    -fx-control-inner-background: #F9F7F7; /* Kolor tła elementów listy */
-    -fx-border-radius: 30px 30px 0px 0px; /* Zaokrąglenie obramowania */
-    -fx-font-size: 14px; /* Rozmiar czcionki */
-    -fx-font-family: "Arial"; /* Czcionka */
-    -fx-text-fill: #3F72AF; /* Kolor tekstu */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2); /* Delikatny cień */
+    -fx-background-color: #DBE2EF; /* Jasne tło listy */
+    -fx-background-radius: 30px 30px 0px 0px; /* Zaokrąglone narożniki */
+    -fx-padding: 8px; /* Wewnętrzne odstępy */
+    -fx-border-width: 1px; /* Szerokość obramowania */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0, 0, 3); /* Delikatny cień dla Material Design */
+
 }
 
+/* Styl dla komórek listy */
 .list_of_files .list-cell {
-    -fx-background-color: transparent; /* Przezroczyste tło komórek */
+    -fx-background-color: #DBE2EF; /* Białe tło każdej komórki */
     -fx-text-fill: #3F72AF; /* Kolor tekstu */
     -fx-font-size: 16px; /* Rozmiar tekstu */
     -fx-font-weight: bold; /* Pogrubienie tekstu */
-    -fx-padding: 10px; /* Odstępy wewnętrzne */
-    -fx-background-radius: 5px; /* Zaokrąglone narożniki */
-    -fx-border-color: #112D4E; /* Kolor obramowania komórek */
-    -fx-border-width: 1px; /* Szerokość obramowania */
-    -fx-border-radius: 5px; /* Dopasowanie zaokrąglenia */
+    -fx-font-family: "Roboto", "Arial", sans-serif; /* Czcionka w stylu Material Design */
+    -fx-padding: 12px; /* Wewnętrzne odstępy */
+    -fx-background-radius: 8px; /* Zaokrąglone narożniki komórek */
+    -fx-border-color: transparent; /* Brak widocznego obramowania domyślnie */
+    -fx-border-width: 0; /* Brak szerokości obramowania */
+    -fx-effect: none; /* Brak efektów początkowych */
+    -fx-transition: all 0.3s ease; /* Płynne przejścia stylów */
 }
 
+/* Styl dla komórek listy po najechaniu */
 .list_of_files .list-cell:hover {
-    -fx-background-color: #3F72AF; /* Kolor tła po najechaniu */
-    -fx-text-fill: #F9F7F7; /* Jasny kolor tekstu po najechaniu */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 3); /* Mocniejszy cień */
+    -fx-background-color: #E3F2FD; /* Subtelny kolor podświetlenia */
+    -fx-text-fill: #1565C0; /* Intensywniejszy kolor tekstu po najechaniu */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 2); /* Cień dla podświetlenia */
+    -fx-border-color: #64B5F6; /* Kolor obramowania po najechaniu */
+    -fx-border-width: 1px; /* Pojawia się cienkie obramowanie */
 }
 
+/* Styl dla paska przewijania */
 .list_of_files .scroll-bar {
     -fx-background-color: transparent; /* Przezroczyste tło */
 }
 
+/* Pionowy pasek przewijania */
 .list_of_files .scroll-bar:vertical {
-    -fx-pref-width: 12px; /* Szerokość pionowego paska przewijania */
+    -fx-pref-width: 12px; /* Szerokość pionowego paska */
 }
 
+/* Styl uchwytu paska przewijania */
 .list_of_files .scroll-bar .thumb {
-    -fx-background-color: #3F72AF; /* Kolor uchwytu przewijania */
-    -fx-background-radius: 5px; /* Zaokrąglenie uchwytu */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0, 0, 2); /* Cień uchwytu */
+    -fx-background-color: #64B5F6; /* Subtelny kolor uchwytu */
+    -fx-background-radius: 6px; /* Zaokrąglony uchwyt */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2); /* Cień uchwytu */
+    -fx-transition: all 0.3s ease; /* Płynne przejścia */
 }
 
+/* Styl uchwytu po najechaniu */
 .list_of_files .scroll-bar .thumb:hover {
-    -fx-background-color: #112D4E; /* Ciemniejszy kolor uchwytu przy najechaniu */
+    -fx-background-color: #1565C0; /* Intensywniejszy kolor uchwytu */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 3); /* Mocniejszy cień */
 }
 
+/* Styl ścieżki paska przewijania */
 .list_of_files .scroll-bar .track {
-    -fx-background-color: #F9F7F7; /* Tło ścieżki przewijania */
+    -fx-background-color: #E0E0E0; /* Jasne tło ścieżki */
+    -fx-background-radius: 6px; /* Dopasowanie do uchwytu */
 }
+
 
 
 .load_file_button {
