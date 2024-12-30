@@ -1,6 +1,5 @@
 package org.example.traveldesktopapp;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.traveldesktopapp.config.HibernateUtil;
 import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
@@ -18,12 +17,12 @@ public class Main {
         OfferRepository repository = new OfferRepository();
 //        repository.deleteAll();
 //        repository.resetIdSequence();
-        for (Offer offer : offers) repository.save(offer);
+//        for (Offer offer : offers) repository.save(offer);
+//
+//        List<Offer> offersFromDb = repository.findAll();
+//        offersFromDb.forEach(o -> System.out.println("Z bazy: " + o));
 
-        List<Offer> offersFromDb = repository.findAll();
-        offersFromDb.forEach(o -> System.out.println("Z bazy: " + o));
-
-//        System.out.println(repository.findAllLocalizations());
+        System.out.println(repository.getDistinctLocalizations());
 
         HibernateUtil.shutdown();
     }

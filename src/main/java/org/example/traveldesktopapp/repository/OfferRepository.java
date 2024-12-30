@@ -14,14 +14,12 @@ public class OfferRepository extends GenericRepositoryImpl<Offer> {
         super(Offer.class);
     }
 
-    public Set<String> findAllLocalizations() {
+    public Set<String> getDistinctLocalizations() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // Używamy nazwy klasy "Offer" bezpośrednio
             List<String> localizations = session.createQuery(
-                    "SELECT DISTINCT e.localization FROM Offer e", String.class
+                    "SELECT DISTINCT e.localization FROM Offer e WHERE e.localization IS NOT NULL", String.class
             ).list();
 
-            // Konwertujemy listę na zbiór, aby usunąć potencjalne duplikaty
             return new HashSet<>(localizations);
         }
     }
