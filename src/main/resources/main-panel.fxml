@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" styleClass="whole-panel" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TableView prefHeight="475.0" prefWidth="692.0" styleClass="table" stylesheets="@css/styles.css" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <MenuBar id="menu-bar" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <AnchorPane prefHeight="475.0" prefWidth="135.0" styleClass="side-bar" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane layoutX="43.0" layoutY="163.0" prefHeight="50.0" prefWidth="50.0" styleClass="home-icon" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="262.0" />
+            <StackPane layoutX="43.0" layoutY="213.0" prefHeight="50.0" prefWidth="50.0" styleClass="search-icon" stylesheets="@css/styles.css">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="search-icon">
+                     <image>
+                        <Image url="@css/magnifying-glass.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <StackPane layoutX="43.0" layoutY="263.0" prefHeight="50.0" prefWidth="50.0" styleClass="trash-icon" stylesheets="@css/styles.css" />
+            <StackPane layoutX="43.0" layoutY="113.0" prefHeight="50.0" prefWidth="50.0" styleClass="home-icon" stylesheets="@css/styles.css">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="home-icon">
+                     <image>
+                        <Image url="@css/house-line.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <StackPane layoutX="43.0" layoutY="313.0" prefHeight="50.0" prefWidth="50.0" styleClass="trash-icon" stylesheets="@css/styles.css">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="trash-icon">
+                     <image>
+                        <Image url="@css/trash.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <ListView prefHeight="422.0" prefWidth="200.0" styleClass="list" stylesheets="@css/styles.css" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="40.0" prefWidth="200.0" styleClass="list-panel" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="84.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="add-file-icon">
+                     <image>
+                        <Image url="@css/file-plus.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+   </right>
+</BorderPane>

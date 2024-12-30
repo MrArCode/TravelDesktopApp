@@ -1,103 +1,48 @@
-.parent {
-    -fx-background-color: #112D4E;
+.side-bar {
+    -fx-background-color: #e7f5ff;
+    -fx-border-color: #343a40;
+    -fx-border-width: 1px;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(52, 58, 64, 0.2), 5, 0, 2, 2);
+}
+
+.table {
+    -fx-background-color: #d0ebff;
+    -fx-border-color: #343a40;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 8px; /* Zaokrąglone rogi */
+    -fx-effect: dropshadow(gaussian, rgba(52, 58, 64, 0.1), 3, 0, 1, 1);
+}
+
+.list {
+    -fx-background-color: #e7f5ff;
+    -fx-border-color: #343a40;
+    -fx-border-width: 1px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(52, 58, 64, 0.1), 3, 0, 1, 1);
+}
+
+.list-panel {
+    -fx-background-color: #e7f5ff;
+    -fx-border-color: #343a40;
+    -fx-border-width: 1px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(52, 58, 64, 0.2), 5, 0, 2, 2);
 }
 
 
-.side_bar{
-    -fx-background-color: #DBE2EF;
-    -fx-background-radius: 0px 30px 30px 0px;
+.menu-bar {
+}
+
+.home-icon {
 
 }
 
-
-.home_panel{
-    -fx-background-color: #DBE2EF;
-    -fx-background-radius: 30px 30px 30px 30px;
+.trash-icon {
 }
 
-
-.list_of_files {
-    -fx-background-color: #DBE2EF; /* Jasne tło listy */
-    -fx-background-radius: 30px 30px 30px 30px; /* Zaokrąglone narożniki */
-    -fx-padding: 8px; /* Wewnętrzne odstępy */
-    -fx-border-width: 1px; /* Szerokość obramowania */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0, 0, 3); /* Delikatny cień dla Material Design */
-
+.search-icon {
 }
-
-.list_of_files .list-cell {
-    -fx-background-color: #DBE2EF; /* Białe tło każdej komórki */
-    -fx-text-fill: #3F72AF; /* Kolor tekstu */
-    -fx-font-size: 16px; /* Rozmiar tekstu */
-    -fx-font-weight: bold; /* Pogrubienie tekstu */
-    -fx-font-family: "Roboto", "Arial", sans-serif; /* Czcionka w stylu Material Design */
-    -fx-padding: 12px; /* Wewnętrzne odstępy */
-    -fx-background-radius: 8px; /* Zaokrąglone narożniki komórek */
-    -fx-border-color: transparent; /* Brak widocznego obramowania domyślnie */
-    -fx-border-width: 0; /* Brak szerokości obramowania */
-    -fx-effect: none; /* Brak efektów początkowych */
-    -fx-transition: all 0.3s ease; /* Płynne przejścia stylów */
-}
-
-.list_of_files .list-cell:hover {
-    -fx-background-color: #E3F2FD; /* Subtelny kolor podświetlenia */
-    -fx-text-fill: #1565C0; /* Intensywniejszy kolor tekstu po najechaniu */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 2); /* Cień dla podświetlenia */
-    -fx-border-color: #64B5F6; /* Kolor obramowania po najechaniu */
-    -fx-border-width: 1px; /* Pojawia się cienkie obramowanie */
-}
-
-.list_of_files .scroll-bar {
-    -fx-background-color: transparent; /* Przezroczyste tło */
-}
-
-.list_of_files .scroll-bar:vertical {
-    -fx-pref-width: 12px; /* Szerokość pionowego paska */
-}
-
-.list_of_files .scroll-bar .thumb {
-    -fx-background-color: #64B5F6; /* Subtelny kolor uchwytu */
-    -fx-background-radius: 6px; /* Zaokrąglony uchwyt */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2); /* Cień uchwytu */
-    -fx-transition: all 0.3s ease; /* Płynne przejścia */
-}
-
-.list_of_files .scroll-bar .thumb:hover {
-    -fx-background-color: #1565C0; /* Intensywniejszy kolor uchwytu */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 3); /* Mocniejszy cień */
-}
-
-.list_of_files .scroll-bar .track {
-    -fx-background-color: #E0E0E0; /* Jasne tło ścieżki */
-    -fx-background-radius: 6px; /* Dopasowanie do uchwytu */
-}
-
-
-.load_file_button {
-    -fx-background-color: #DBE2EF; /* Podstawowy kolor tła */
-    -fx-text-fill: #3F72AF; /* Kolor tekstu */
-    -fx-font-size: 16px; /* Rozmiar tekstu */
-    -fx-font-weight: bold; /* Pogrubienie tekstu */
-    -fx-padding: 12px 20px; /* Wewnętrzne odstępy */
-    -fx-border-radius: 5px; /* Lekko zaokrąglone narożniki */
-    -fx-background-radius: 5px; /* Dopasowanie zaokrąglenia tła */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2); /* Delikatny cień */
-    -fx-cursor: hand; /* Kursor w stylu "ręki" */
-    -fx-transition: all 0.3s ease; /* Płynna animacja przejścia */
-}
-
-.load_file_button:hover {
-    -fx-background-color: #3F72AF; /* Ciemniejszy kolor tła po najechaniu */
-    -fx-text-fill: #F9F7F7; /* Jasny tekst */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 3); /* Mocniejszy cień po najechaniu */
-}
-
-.load_file_button:pressed {
-    -fx-background-color: #112D4E; /* Ciemny kolor po wciśnięciu */
-    -fx-text-fill: #F9F7F7; /* Jasny tekst */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 2, 0, 0, 1); /* Subtelny cień */
-    -fx-translate-y: 2px; /* Symulacja wciśnięcia przez przesunięcie */
-}
-
-
-
