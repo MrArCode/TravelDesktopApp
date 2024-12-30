@@ -1,6 +1,7 @@
 package org.example.traveldesktopapp.service;
 
 import org.example.traveldesktopapp.model.Offer;
+import org.example.traveldesktopapp.repository.OfferRepository;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,12 +11,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class OfferService {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final OfferRepository offerRepository;
 
-    public static List<Offer> readOffersFromFile(String path) {
+    public OfferService(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+
+    public List<Offer> readOffersFromFile(String path) {
         List<Offer> offers = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(
@@ -38,7 +45,27 @@ public class OfferService {
         return offers;
     }
 
-    private static Offer parseOffer(String line) {
+
+    public void saveAll(List<Offer> offers) {
+        for (Offer offer : offers) {
+            offerRepository.save(offer);
+        }
+    }
+
+    public List<Offer> findAll() {
+        return offerRepository.findAll();
+    }
+
+    public void deleteAll(){
+        offerRepository.deleteAll();
+    }
+
+    public Set<String> getDistinctLocalizations() {
+        return offerRepository.getDistinctLocalizations();
+    }
+
+
+    private Offer parseOffer(String line) {
         String[] fields = line.split("\t");
 
         if (fields.length != 7) {
@@ -57,7 +84,7 @@ public class OfferService {
         return new Offer(0, language, localization, country, startDate, endDate, location, price, currency);
     }
 
-    private static LocalDate parseDate(String date) {
+    private LocalDate parseDate(String date) {
         try {
             return LocalDate.parse(date, DATE_FORMATTER);
         } catch (Exception e) {
@@ -65,7 +92,7 @@ public class OfferService {
         }
     }
 
-    private static String extractLanguage(String localization) {
+    private String extractLanguage(String localization) {
         int index = localization.indexOf('_');
         if (index == -1) {
             return localization;
@@ -73,19 +100,15 @@ public class OfferService {
         return localization.substring(0, index);
     }
 
-
-    private static String createLocale(String localeString) {
+    private String createLocale(String localeString) {
         if (!localeString.contains("_")) {
             return null;
         }
-
         int index = localeString.indexOf('_');
         return localeString.substring(index + 1);
     }
 
-
-
-    private static double parsePrice(String priceString, String localization) {
+    private double parsePrice(String priceString, String localization) {
         if (priceString == null || priceString.isEmpty()) {
             throw new IllegalArgumentException("Price cannot be null or empty");
         }
@@ -95,7 +118,6 @@ public class OfferService {
         }
 
         try {
-            // Normalizacja ceny w zależności od lokalizacji
             String normalizedPrice = switch (localization.toUpperCase()) {
                 case "GB" -> priceString.replace(",", "");
                 case "PL" -> priceString.replace(",", ".");
@@ -106,8 +128,4 @@ public class OfferService {
             throw new IllegalArgumentException("Invalid price format: " + priceString, e);
         }
     }
-
-
-
-
 }
