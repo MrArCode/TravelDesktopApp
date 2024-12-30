@@ -61,14 +61,15 @@ public abstract class GenericRepositoryImpl<T> implements GenericRepository<T> {
     @Override
     public void deleteAll() {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
             String hql = "DELETE FROM " + entityClass.getName();
             Query<?> query = session.createQuery(hql);
+            query.executeUpdate();
 
             transaction.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }

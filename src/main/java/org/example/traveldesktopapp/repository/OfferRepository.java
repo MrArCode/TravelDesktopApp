@@ -7,4 +7,6 @@ public class OfferRepository extends GenericRepositoryImpl<Offer> {
     public OfferRepository() {
         super(Offer.class);
     }
+
+
 }
