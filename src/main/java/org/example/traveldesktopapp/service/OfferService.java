@@ -45,6 +45,7 @@ public class OfferService {
             throw new IllegalArgumentException("Line must have exactly 7 fields");
         }
 
+        String language = extractLanguage(fields[0]);
         String localization = createLocale(fields[0]);
         String country = fields[1];
         LocalDate startDate = parseDate(fields[2]);
@@ -53,7 +54,7 @@ public class OfferService {
         double price = parsePrice(fields[5], localization);
         String currency = fields[6];
 
-        return new Offer(0, localization, country, startDate, endDate, location, price, currency);
+        return new Offer(0, language, localization, country, startDate, endDate, location, price, currency);
     }
 
     private static LocalDate parseDate(String date) {
@@ -64,22 +65,40 @@ public class OfferService {
         }
     }
 
-    private static String createLocale(String localeString) {
-        localeString = localeString.replace("_", "-");
-        String[] parts = localeString.split("-");
-
-        if (parts.length == 1) {
-            return parts[0];
+    private static String extractLanguage(String localization) {
+        int index = localization.indexOf('_');
+        if (index == -1) {
+            return localization;
         }
-
-        return localeString;
+        return localization.substring(0, index);
     }
 
+
+    private static String createLocale(String localeString) {
+        if (!localeString.contains("_")) {
+            return null;
+        }
+
+        int index = localeString.indexOf('_');
+        return localeString.substring(index + 1);
+    }
+
+
+
     private static double parsePrice(String priceString, String localization) {
+        if (priceString == null || priceString.isEmpty()) {
+            throw new IllegalArgumentException("Price cannot be null or empty");
+        }
+
+        if (localization == null) {
+            return Double.parseDouble(priceString.replace(",", "."));
+        }
+
         try {
-            String normalizedPrice = switch (localization.split("-")[0]) {
-                case "pl" -> priceString.replace(",", ".");
-                case "en" -> priceString.replace(",", "");
+            // Normalizacja ceny w zależności od lokalizacji
+            String normalizedPrice = switch (localization.toUpperCase()) {
+                case "GB" -> priceString.replace(",", "");
+                case "PL" -> priceString.replace(",", ".");
                 default -> priceString.replace(",", ".");
             };
             return Double.parseDouble(normalizedPrice);
@@ -87,4 +106,8 @@ public class OfferService {
             throw new IllegalArgumentException("Invalid price format: " + priceString, e);
         }
     }
+
+
+
+
 }

@@ -18,10 +18,10 @@ public class Main {
         OfferRepository repository = new OfferRepository();
 //        repository.deleteAll();
 //        repository.resetIdSequence();
-//        for (Offer offer : offers) repository.save(offer);
+        for (Offer offer : offers) repository.save(offer);
 
-//        List<Offer> offersFromDb = repository.findAll();
-//        offersFromDb.forEach(o -> System.out.println("Z bazy: " + o));
+        List<Offer> offersFromDb = repository.findAll();
+        offersFromDb.forEach(o -> System.out.println("Z bazy: " + o));
 
 //        System.out.println(repository.findAllLocalizations());
 
