@@ -77,7 +77,12 @@
          <bottom>
             <AnchorPane prefHeight="40.0" prefWidth="200.0" styleClass="list-panel" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView id="add-file-icon" fx:id="addButton" fitHeight="32.0" fitWidth="32.0" layoutX="84.0" layoutY="18.0" onMouseClicked="#addOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="add-file-icon">
+                  <ImageView id="upload-file-icon" fx:id="uploadButton" fitHeight="32.0" fitWidth="32.0" layoutX="116.0" layoutY="20.0" onMouseClicked="#uploadOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="upload-file-icon">
+                     <image>
+                        <Image url="@css/file-arrow-up.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="add-file-icon" fx:id="addButton1" fitHeight="32.0" fitWidth="32.0" layoutX="52.0" layoutY="20.0" onMouseClicked="#addOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="add-file-icon">
                      <image>
                         <Image url="@css/file-plus.png" />
                      </image>
