@@ -5,6 +5,7 @@ import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -40,11 +41,11 @@ public class OfferService {
         this.offerRepository = offerRepository;
     }
 
-    public List<Offer> readOffersFromFile(String path) {
+    public List<Offer> readOffersFromFile(File file) {
         List<Offer> offers = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+                new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -57,11 +58,12 @@ public class OfferService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error reading the file: " + path, e);
+            throw new RuntimeException("Error reading the file: " + file.getAbsolutePath(), e);
         }
 
         return offers;
     }
+
 
     public void saveAll(List<Offer> offers) {
         for (Offer offer : offers) {

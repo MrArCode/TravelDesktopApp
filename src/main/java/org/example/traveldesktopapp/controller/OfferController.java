@@ -3,6 +3,7 @@ package org.example.traveldesktopapp.controller;
 import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.service.OfferService;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +15,8 @@ public class OfferController {
         this.offerService = offerService;
     }
 
-    public void importOffers(String filePath) {
-        List<Offer> offers = offerService.readOffersFromFile(filePath);
+    public void importOffers(File file) {
+        List<Offer> offers = offerService.readOffersFromFile(file);
         offerService.saveAll(offers);
     }
 
