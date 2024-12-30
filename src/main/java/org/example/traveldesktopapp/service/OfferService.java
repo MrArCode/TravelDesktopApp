@@ -1,5 +1,6 @@
 package org.example.traveldesktopapp.service;
 
+import lombok.val;
 import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
 
@@ -7,17 +8,33 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class OfferService {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final OfferRepository offerRepository;
+
+    private static final Map<String, String> PL_TO_INTERNAL = Map.of(
+            "Japonia", "COUNTRY_JAPAN",
+            "Włochy", "COUNTRY_ITALY",
+            "Stany Zjednoczone Ameryki", "COUNTRY_USA",
+            "jezioro", "DESTINATION_LAKE",
+            "morze", "DESTINATION_SEA",
+            "góry", "DESTINATION_MOUNTAINS"
+    );
+
+    private static final Map<String, String> EN_TO_INTERNAL = Map.of(
+            "Japan", "COUNTRY_JAPAN",
+            "Italy", "COUNTRY_ITALY",
+            "United States", "COUNTRY_USA",
+            "lake", "DESTINATION_LAKE",
+            "sea", "DESTINATION_SEA",
+            "mountains", "DESTINATION_MOUNTAINS"
+    );
 
     public OfferService(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
@@ -46,7 +63,6 @@ public class OfferService {
         return offers;
     }
 
-
     public void saveAll(List<Offer> offers) {
         for (Offer offer : offers) {
             offerRepository.save(offer);
@@ -57,7 +73,7 @@ public class OfferService {
         return offerRepository.findAll();
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         offerRepository.deleteAll();
     }
 
@@ -66,25 +82,53 @@ public class OfferService {
     }
 
     public Set<String> getDistinctLanguages() {
-        return offerRepository.getDistinctLocalizations();
+        return offerRepository.getDistinctLanguages();
     }
 
-    public void showOfferInAllLanguages(){
-        Set<String> languages = getDistinctLanguages();
-        Set<String> localization = getDistinctLocalizations();
+    public void showOfferInAllLanguages() {
+        List<Locale> targetLocales = new ArrayList<>();
+        Set<String> languages = offerRepository.getDistinctLanguages();
+        for (String language : languages) {
+            targetLocales.add(Locale.of(language));
+        }
+
+
+
         List<Offer> offers = findAll();
 
-        for (String language : languages) {
+        for (Locale locale : targetLocales) {
+            ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+
+            NumberFormat nf = NumberFormat.getInstance(locale);
+
+            System.out.println("Offers in language: " + locale);
+
             for (Offer offer : offers) {
-                if(offer.getLanguage().equals(language)){
-                    continue;
-                }else{
-                    System.out.println("[language change]" + offer);
-                }
+                String keyCountry = offer.getCountry();
+                String keyDestination = offer.getDestination();
+
+                String displayedCountry = bundle.containsKey(keyCountry)
+                        ? bundle.getString(keyCountry)
+                        : keyCountry;
+
+                String displayedDestination = bundle.containsKey(keyDestination)
+                        ? bundle.getString(keyDestination)
+                        : keyDestination;
+
+                String formattedPrice = nf.format(offer.getPrice());
+
+                String line = displayedCountry + " "
+                              + offer.getStartDate() + " "
+                              + offer.getEndDate() + " "
+                              + displayedDestination + " "
+                              + formattedPrice + " "
+                              + offer.getCurrency();
+
+                System.out.println(line);
             }
+            System.out.println();
         }
     }
-
 
     private Offer parseOffer(String line) {
         String[] fields = line.split("\t");
@@ -95,14 +139,41 @@ public class OfferService {
 
         String language = extractLanguage(fields[0]);
         String localization = createLocale(fields[0]);
-        String country = fields[1];
-        LocalDate startDate = parseDate(fields[2]);
-        LocalDate endDate = parseDate(fields[3]);
-        String location = fields[4];
-        double price = parsePrice(fields[5], localization);
+        String countryRaw = fields[1];
+        String startDateRaw = fields[2];
+        String endDateRaw = fields[3];
+        String destinationRaw = fields[4];
+        String priceRaw = fields[5];
         String currency = fields[6];
 
-        return new Offer(0, language, localization, country, startDate, endDate, location, price, currency);
+        LocalDate startDate = parseDate(startDateRaw);
+        LocalDate endDate = parseDate(endDateRaw);
+        double price = parsePrice(priceRaw, localization);
+
+
+        String countryKey = normalizeToInternalKey(countryRaw, language);
+        String destinationKey = normalizeToInternalKey(destinationRaw, language);
+
+        return new Offer(
+                0,
+                language,
+                localization,
+                countryKey,
+                startDate,
+                endDate,
+                destinationKey,
+                price,
+                currency
+        );
+    }
+
+    private String normalizeToInternalKey(String rawText, String lang) {
+        if (lang.startsWith("pl")) {
+            return PL_TO_INTERNAL.getOrDefault(rawText, rawText);
+        } else if (lang.startsWith("en")) {
+            return EN_TO_INTERNAL.getOrDefault(rawText, rawText);
+        }
+        return rawText;
     }
 
     private LocalDate parseDate(String date) {
@@ -133,6 +204,8 @@ public class OfferService {
         if (priceString == null || priceString.isEmpty()) {
             throw new IllegalArgumentException("Price cannot be null or empty");
         }
+
+        priceString = priceString.replace(" ", "");
 
         if (localization == null) {
             return Double.parseDouble(priceString.replace(",", "."));

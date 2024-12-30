@@ -19,9 +19,10 @@ public class Main {
 
         var offerController = new OfferController(offerService);
 
+//        offerController.deleteAllOffer();
 //        String filePath = "src/main/resources/data.txt";
 //        offerController.importOffers(filePath);
-
+//
 //        List<Offer> allOffers = offerController.getAllOffers();
 //        allOffers.forEach(System.out::println);
         offerController.showOfferInAllLanguages();
