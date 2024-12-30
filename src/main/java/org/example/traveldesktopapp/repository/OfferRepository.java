@@ -24,4 +24,15 @@ public class OfferRepository extends GenericRepositoryImpl<Offer> {
             return new HashSet<>(localizations);
         }
     }
+
+    public Set<String> getDistinctLanguages() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<String> localizations = session.createQuery(
+                    "SELECT DISTINCT e.language FROM Offer e WHERE e.language IS NOT NULL",
+                    String.class
+            ).list();
+
+            return new HashSet<>(localizations);
+        }
+    }
 }

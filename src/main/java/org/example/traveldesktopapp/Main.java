@@ -21,10 +21,10 @@ public class Main {
 
 //        String filePath = "src/main/resources/data.txt";
 //        offerController.importOffers(filePath);
-//
+
 //        List<Offer> allOffers = offerController.getAllOffers();
 //        allOffers.forEach(System.out::println);
+        offerController.showOfferInAllLanguages();
 
-        offerController.deleteAllOffer();
     }
 }

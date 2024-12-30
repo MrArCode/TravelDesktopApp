@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,6 +63,26 @@ public class OfferService {
 
     public Set<String> getDistinctLocalizations() {
         return offerRepository.getDistinctLocalizations();
+    }
+
+    public Set<String> getDistinctLanguages() {
+        return offerRepository.getDistinctLocalizations();
+    }
+
+    public void showOfferInAllLanguages(){
+        Set<String> languages = getDistinctLanguages();
+        Set<String> localization = getDistinctLocalizations();
+        List<Offer> offers = findAll();
+
+        for (String language : languages) {
+            for (Offer offer : offers) {
+                if(offer.getLanguage().equals(language)){
+                    continue;
+                }else{
+                    System.out.println("[language change]" + offer);
+                }
+            }
+        }
     }
 
 

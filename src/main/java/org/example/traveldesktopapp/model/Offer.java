@@ -41,4 +41,8 @@ public class Offer {
 
     @Column(name = "currency")
     private String currency;
+
+    public String toString(){
+        return country + " " + startDate + " " + endDate + " " + destination + " " + price + " " + currency;
+    }
 }

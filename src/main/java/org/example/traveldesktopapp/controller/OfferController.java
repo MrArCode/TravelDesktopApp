@@ -4,6 +4,7 @@ import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.service.OfferService;
 
 import java.util.List;
+import java.util.Set;
 
 public class OfferController {
 
@@ -24,6 +25,14 @@ public class OfferController {
 
     public void deleteAllOffer(){
         offerService.deleteAll();
+    }
+
+    public Set<String> getDistinctLocalizations() {
+        return offerService.getDistinctLocalizations();
+    }
+
+    public void showOfferInAllLanguages(){
+        offerService.showOfferInAllLanguages();
     }
 
 }
