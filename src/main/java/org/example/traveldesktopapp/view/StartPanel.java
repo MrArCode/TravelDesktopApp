@@ -3,16 +3,12 @@ package org.example.traveldesktopapp.view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import org.example.traveldesktopapp.controller.OfferController;
-import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
 import org.example.traveldesktopapp.service.OfferService;
 
@@ -87,14 +83,34 @@ public class StartPanel {
 
     @FXML
     void trashOnMouseClicked(MouseEvent event) {
-        System.out.println("Trash clicked!");
+        offerController.deleteAllOffer();
+        showAlert(Alert.AlertType.INFORMATION, "List Deleted", "All offers have been erased from the table.");
     }
 
     @FXML
     void uploadOnMouseClicked(MouseEvent event) {
+        if (files.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION, "Empty List", "There are no files in the list.");
+            return;
+        }
+
         for (File file : files) {
-            System.out.println("Importing file: " + file.getName());
             offerController.importOffers(file);
         }
+
+        listOfFiles.getItems().clear();
+        showAlert(Alert.AlertType.INFORMATION, "Import Completed", "The files have been successfully imported!");
+
+
     }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
 }

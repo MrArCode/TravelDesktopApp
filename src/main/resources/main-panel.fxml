@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" styleClass="whole-panel" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.traveldesktopapp.view.StartPanel">
    <center>
-      <TableView id="table" fx:id="table" prefHeight="475.0" prefWidth="692.0" styleClass="table" stylesheets="@css/styles.css" BorderPane.alignment="CENTER" />
+      <TableView id="table" fx:id="table" prefHeight="473.0" prefWidth="683.0" styleClass="table" stylesheets="@css/styles.css" BorderPane.alignment="CENTER" />
    </center>
    <top>
       <MenuBar id="menu-bar" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
@@ -71,9 +71,9 @@
       </AnchorPane>
    </left>
    <right>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="200.0" prefWidth="199.0" BorderPane.alignment="CENTER">
          <center>
-            <ListView id="list" fx:id="listOfFiles" prefHeight="422.0" prefWidth="200.0" styleClass="list" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+            <ListView id="list" fx:id="listOfFiles" prefHeight="399.0" prefWidth="199.0" styleClass="list" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
