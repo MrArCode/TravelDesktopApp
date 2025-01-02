@@ -22,9 +22,9 @@ public class Main {
 
 //        offerController.deleteAllOffer();
 
-        List<String> map = offerController.getAllOffersFormatted();
-        for (String s : map) {
-            System.out.println(s);
+        List<Offer> offers = offerRepository.getAllOffers();
+        for (Offer offer : offers) {
+            System.out.println(offer);
         }
 
     }

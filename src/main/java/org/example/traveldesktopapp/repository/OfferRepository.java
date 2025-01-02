@@ -3,6 +3,7 @@ package org.example.traveldesktopapp.repository;
 import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.config.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.HashSet;
 import java.util.List;
@@ -34,5 +35,19 @@ public class OfferRepository extends GenericRepositoryImpl<Offer> {
 
             return new HashSet<>(localizations);
         }
+    }
+
+    public List<Offer> getAllOffers() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Offer> offers = null;
+        try {
+            Query<Offer> query = session.createQuery("FROM Offer", Offer.class);
+            offers = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return offers;
     }
 }
