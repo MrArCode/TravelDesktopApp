@@ -8,7 +8,8 @@ import org.example.traveldesktopapp.service.OfferService;
 
 
 import java.util.List;
-
+import java.util.Locale;
+import java.util.Map;
 
 
 public class Main {
@@ -19,13 +20,12 @@ public class Main {
 
         var offerController = new OfferController(offerService);
 
-        offerController.deleteAllOffer();
-//        String filePath = "src/main/resources/data.txt";
-//        offerController.importOffers(filePath);
-//
-//        List<Offer> allOffers = offerController.getAllOffers();
-//        allOffers.forEach(System.out::println);
-//        offerController.showOfferInAllLanguages();
+//        offerController.deleteAllOffer();
+
+        List<String> map = offerController.getAllOffersFormatted();
+        for (String s : map) {
+            System.out.println(s);
+        }
 
     }
 }

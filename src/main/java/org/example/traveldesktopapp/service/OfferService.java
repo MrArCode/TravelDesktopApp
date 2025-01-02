@@ -87,23 +87,22 @@ public class OfferService {
         return offerRepository.getDistinctLanguages();
     }
 
-    public void showOfferInAllLanguages() {
+    public List<String> getAllOffersFormatted() {
+        List<String> formattedOffers = new ArrayList<>();
         List<Locale> targetLocales = new ArrayList<>();
         Set<String> languages = offerRepository.getDistinctLanguages();
+
+        // Prepare target locales
         for (String language : languages) {
             targetLocales.add(Locale.of(language));
         }
 
-
-
         List<Offer> offers = findAll();
 
+        // Process offers for each locale
         for (Locale locale : targetLocales) {
             ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
-
             NumberFormat nf = NumberFormat.getInstance(locale);
-
-            System.out.println("Offers in language: " + locale);
 
             for (Offer offer : offers) {
                 String keyCountry = offer.getCountry();
@@ -126,11 +125,13 @@ public class OfferService {
                               + formattedPrice + " "
                               + offer.getCurrency();
 
-                System.out.println(line);
+                formattedOffers.add(line);
             }
-            System.out.println();
         }
+
+        return formattedOffers;
     }
+
 
     private Offer parseOffer(String line) {
         String[] fields = line.split("\t");

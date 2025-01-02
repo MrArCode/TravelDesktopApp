@@ -5,6 +5,8 @@ import org.example.traveldesktopapp.service.OfferService;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class OfferController {
@@ -32,8 +34,8 @@ public class OfferController {
         return offerService.getDistinctLocalizations();
     }
 
-    public void showOfferInAllLanguages(){
-        offerService.showOfferInAllLanguages();
+    public List<String> getAllOffersFormatted(){
+        return offerService.getAllOffersFormatted();
     }
 
 }
