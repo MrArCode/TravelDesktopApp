@@ -20,12 +20,12 @@ public class Main {
 
         var offerController = new OfferController(offerService);
 
-//        offerController.deleteAllOffer();
+        offerController.deleteAllOffer();
 
-        List<Offer> offers = offerRepository.getAllOffers();
-        for (Offer offer : offers) {
-            System.out.println(offer);
-        }
+//        List<Offer> offers = offerRepository.getAllOffers();
+//        for (Offer offer : offers) {
+//            System.out.println(offer);
+//        }
 
     }
 }
