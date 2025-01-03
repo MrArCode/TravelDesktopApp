@@ -74,24 +74,24 @@
             </StackPane>
             <StackPane layoutX="43.0" layoutY="313.0" prefHeight="50.0" prefWidth="50.0" styleClass="trash-icon" stylesheets="@css/styles.css">
                <children>
-                  <ImageView id="trash-icon" fx:id="trashButton" fitHeight="32.0" fitWidth="32.0" onMouseClicked="#trashOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="trash-icon">
+                  <ImageView id="trash-icon" fitHeight="32.0" fitWidth="32.0" onMouseClicked="#trashOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="trash-icon">
                      <image>
                         <Image url="@css/trash.png" />
                      </image>
                   </ImageView>
                </children>
             </StackPane>
-            <ImageView id="poland-icon" fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="poland-icon">
+            <ImageView id="poland-icon" fx:id="polandButton" fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="poland-icon">
                <image>
                   <Image url="@css/poland.png" />
                </image>
             </ImageView>
-            <ImageView id="germany-icon" fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="germany-icon">
+            <ImageView id="germany-icon" fx:id="germanButton" fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="germany-icon">
                <image>
                   <Image url="@css/germany.png" />
                </image>
             </ImageView>
-            <ImageView id="england-icon" fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="england-icon">
+            <ImageView id="england-icon" fx:id="englandButton" fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="england-icon">
                <image>
                   <Image url="@css/united-kingdom.png" />
                </image>

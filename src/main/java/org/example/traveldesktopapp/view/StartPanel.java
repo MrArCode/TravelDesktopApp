@@ -62,6 +62,15 @@ public class StartPanel {
     @FXML
     private ImageView uploadButton;
 
+    @FXML
+    private ImageView englandButton;
+
+    @FXML
+    private ImageView germanButton;
+
+    @FXML
+    private ImageView polandButton;
+
 
     @FXML
     public void initialize() {
