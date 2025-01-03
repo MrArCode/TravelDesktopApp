@@ -20,17 +20,17 @@ public class Main {
 
         var offerController = new OfferController(offerService);
 
-//        offerController.deleteAllOffer();
+        offerController.deleteAllOffer();
 
-        Map<Locale, List<Offer>> offers = offerService.getAllOffersLocalized();
-        for (Map.Entry<Locale, List<Offer>> localeListEntry : offers.entrySet()) {
-            List<Offer> list = localeListEntry.getValue();
-            System.out.println(localeListEntry.getKey());
-            for (Offer offer : list) {
-                System.out.println(offer);
-            }
-
-        }
+//        Map<Locale, List<Offer>> offers = offerService.getAllOffersLocalized();
+//        for (Map.Entry<Locale, List<Offer>> localeListEntry : offers.entrySet()) {
+//            List<Offer> list = localeListEntry.getValue();
+//            System.out.println(localeListEntry.getKey());
+//            for (Offer offer : list) {
+//                System.out.println(offer);
+//            }
+//
+//        }
 
     }
 }

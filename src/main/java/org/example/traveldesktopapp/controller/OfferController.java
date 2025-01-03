@@ -5,9 +5,6 @@ import org.example.traveldesktopapp.service.OfferService;
 
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 public class OfferController {
 
@@ -22,16 +19,8 @@ public class OfferController {
         offerService.saveAll(offers);
     }
 
-    public List<Offer> getAllOffers() {
-        return offerService.findAll();
-    }
-
     public void deleteAllOffer(){
         offerService.deleteAll();
-    }
-
-    public Set<String> getDistinctLocalizations() {
-        return offerService.getDistinctLocalizations();
     }
 
 }

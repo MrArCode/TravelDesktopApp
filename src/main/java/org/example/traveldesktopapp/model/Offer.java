@@ -42,18 +42,6 @@ public class Offer {
     @Column(name = "currency")
     private String currency;
 
-    public Offer(Offer other) {
-        this.id = other.id;
-        this.language = other.language;
-        this.localization = other.localization;
-        this.country = other.country;
-        this.startDate = other.startDate;
-        this.endDate = other.endDate;
-        this.destination = other.destination;
-        this.price = other.price;
-        this.currency = other.currency;
-    }
-
     public String toString(){
         return country + " " + startDate + " " + endDate + " " + destination + " " + price + " " + currency;
     }
