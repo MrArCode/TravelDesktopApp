@@ -9,19 +9,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import org.example.traveldesktopapp.controller.OfferController;
+import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
 import org.example.traveldesktopapp.service.OfferService;
 
 import java.io.File;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class StartPanel {
 
     private final OfferRepository offerRepository = new OfferRepository();
     private final OfferService offerService = new OfferService(offerRepository);
     private final OfferController offerController = new OfferController(offerService);
+    private Map<Locale, List<Offer>> offers;
 
     @FXML
     private ImageView addButton;
@@ -37,28 +37,29 @@ public class StartPanel {
     private ImageView searchButton;
 
     @FXML
-    private TableView<OfferToDisplay> table;
+    private TableView<Offer> table;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> countryColumn;
+    private TableColumn<Offer, String> countryColumn;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> dateFromColumn;
+    private TableColumn<Offer, String> dateFromColumn;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> dateToColumn;
+    private TableColumn<Offer, String> dateToColumn;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> destinationColumn;
+    private TableColumn<Offer, String> destinationColumn;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> priceColumn;
+    private TableColumn<Offer, String> priceColumn;
 
     @FXML
-    private TableColumn<OfferToDisplay, String> currencyColumn;
+    private TableColumn<Offer, String> currencyColumn;
 
     @FXML
     private ImageView trashButton;
+
     @FXML
     private ImageView uploadButton;
 
@@ -71,9 +72,12 @@ public class StartPanel {
     @FXML
     private ImageView polandButton;
 
+    // Aktualnie wybrany Locale
+    private Locale currentLocale;
 
     @FXML
     public void initialize() {
+        // Inicjalizacja listy plików
         files = FXCollections.observableArrayList();
         listOfFiles.setItems(files);
 
@@ -90,11 +94,16 @@ public class StartPanel {
         });
 
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-        dateFromColumn.setCellValueFactory(new PropertyValueFactory<>("dateFrom"));
-        dateToColumn.setCellValueFactory(new PropertyValueFactory<>("dateTo"));
+        dateFromColumn.setCellValueFactory(new PropertyValueFactory<>("startDate")); // Upewnij się, że nazwy pól są poprawne
+        dateToColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         currencyColumn.setCellValueFactory(new PropertyValueFactory<>("currency"));
+
+        offers = offerService.getAllOffersLocalized();
+
+        Locale polishLocale = Locale.forLanguageTag("pl");
+        setLocale(polishLocale);
     }
 
     @FXML
@@ -112,55 +121,36 @@ public class StartPanel {
         System.out.println("Home clicked!");
     }
 
-    @FXML
-    void searchOnMouseClicked(MouseEvent event) {
-        List<String> rawList = offerController.getAllOffersFormatted();
-        ObservableList<OfferToDisplay> offers = FXCollections.observableArrayList();
-
-        Pattern datePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-
-        for (String line : rawList) {
-            Matcher matcher = datePattern.matcher(line);
-            if (matcher.find()) {
-                int dateStartIndex = matcher.start();
-                String country = line.substring(0, dateStartIndex).trim();
-
-                String remaining = line.substring(dateStartIndex).trim();
-
-                String[] tokens = remaining.split("\\s+");
-                if (tokens.length >= 5) {
-                    String dateFrom = tokens[0];
-                    String dateTo = tokens[1];
-                    String destination = tokens[2];
-
-                    StringBuilder priceBuilder = new StringBuilder();
-                    for (int i = 3; i < tokens.length - 1; i++) {
-                        priceBuilder.append(tokens[i]).append(" ");
-                    }
-                    String price = priceBuilder.toString().trim();
-                    String currency = tokens[tokens.length - 1];
-
-                    OfferToDisplay offer = new OfferToDisplay(
-                            country,
-                            dateFrom,
-                            dateTo,
-                            destination,
-                            price,
-                            currency
-                    );
-                    offers.add(offer);
-                }
-            } else {
-                System.err.println("Failed to match date in line: " + line);
-            }
+    private void setLocale(Locale locale) {
+        this.currentLocale = locale;
+        List<Offer> localizedOffers = offers.get(locale);
+        if (localizedOffers == null) {
+            showAlert(Alert.AlertType.ERROR,
+                    "Brak danych",
+                    "Brak ofert dla wybranej lokalizacji.");
+            table.setItems(FXCollections.observableArrayList());
+            return;
         }
-        table.setItems(offers);
+        ObservableList<Offer> observableOffers = FXCollections.observableArrayList(localizedOffers);
+        table.setItems(observableOffers);
     }
 
+    @FXML
+    void searchOnMouseClicked(MouseEvent event) {
+        // Obecnie wyświetla wszystkie oferty dla aktualnie wybranej lokalizacji
+        if (currentLocale != null) {
+            setLocale(currentLocale);
+        } else {
+            showAlert(Alert.AlertType.WARNING,
+                    "Brak lokalizacji",
+                    "Nie wybrano lokalizacji.");
+        }
+    }
 
     @FXML
     void trashOnMouseClicked(MouseEvent event) {
         offerController.deleteAllOffer();
+        table.setItems(FXCollections.observableArrayList());
         showAlert(Alert.AlertType.INFORMATION,
                 "List Deleted",
                 "All offers have been erased from the table.");
@@ -178,11 +168,35 @@ public class StartPanel {
         for (File file : files) {
             offerController.importOffers(file);
         }
+        offers = offerService.getAllOffersLocalized();
 
         listOfFiles.getItems().clear();
         showAlert(Alert.AlertType.INFORMATION,
                 "Import Completed",
                 "The files have been successfully imported!");
+
+        // Ponowne ustawienie tabeli z aktualną lokalizacją
+        if (currentLocale != null) {
+            setLocale(currentLocale);
+        }
+    }
+
+    @FXML
+    void englandOnMouseClicked(MouseEvent event) {
+        Locale locale = Locale.forLanguageTag("en");
+        setLocale(locale);
+    }
+
+    @FXML
+    void germanOnMouseClicked(MouseEvent event) {
+        Locale locale = Locale.forLanguageTag("de");
+        setLocale(locale);
+    }
+
+    @FXML
+    void polandOnMouseClicked(MouseEvent event) {
+        Locale locale = Locale.forLanguageTag("pl");
+        setLocale(locale);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

@@ -81,17 +81,17 @@
                   </ImageView>
                </children>
             </StackPane>
-            <ImageView id="poland-icon" fx:id="polandButton" fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="poland-icon">
+            <ImageView id="poland-icon" fx:id="polandButton" fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" onMouseClicked="#polandOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="poland-icon">
                <image>
                   <Image url="@css/poland.png" />
                </image>
             </ImageView>
-            <ImageView id="germany-icon" fx:id="germanButton" fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="germany-icon">
+            <ImageView id="germany-icon" fx:id="germanButton" fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" onMouseClicked="#germanOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="germany-icon">
                <image>
                   <Image url="@css/germany.png" />
                </image>
             </ImageView>
-            <ImageView id="england-icon" fx:id="englandButton" fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="england-icon">
+            <ImageView id="england-icon" fx:id="englandButton" fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" onMouseClicked="#englandOnMouseClicked" pickOnBounds="true" preserveRatio="true" styleClass="england-icon">
                <image>
                   <Image url="@css/united-kingdom.png" />
                </image>

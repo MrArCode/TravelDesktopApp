@@ -87,49 +87,53 @@ public class OfferService {
         return offerRepository.getDistinctLanguages();
     }
 
-    public List<String> getAllOffersFormatted() {
-        List<String> formattedOffers = new ArrayList<>();
-        List<Locale> targetLocales = new ArrayList<>();
+    public Map<Locale, List<Offer>> getAllOffersLocalized() {
+        Map<Locale, List<Offer>> offersByLocale = new HashMap<>();
         Set<String> languages = offerRepository.getDistinctLanguages();
 
-        // Prepare target locales
+        // Przygotuj docelowe lokalizacje
+        List<Locale> targetLocales = new ArrayList<>();
         for (String language : languages) {
-            targetLocales.add(Locale.of(language));
+            targetLocales.add(Locale.forLanguageTag(language));
         }
 
         List<Offer> offers = findAll();
 
-        // Process offers for each locale
         for (Locale locale : targetLocales) {
-            ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
-            NumberFormat nf = NumberFormat.getInstance(locale);
+            ResourceBundle bundle;
+            try {
+                bundle = ResourceBundle.getBundle("messages", locale);
+            } catch (MissingResourceException e) {
+                System.err.println("Brak pliku zasobów dla locale: " + locale);
+                continue;
+            }
+
+            List<Offer> localizedOffers = new ArrayList<>();
 
             for (Offer offer : offers) {
-                String keyCountry = offer.getCountry();
-                String keyDestination = offer.getDestination();
+                String translatedCountry = bundle.containsKey(offer.getCountry())
+                        ? bundle.getString(offer.getCountry())
+                        : offer.getCountry();
 
-                String displayedCountry = bundle.containsKey(keyCountry)
-                        ? bundle.getString(keyCountry)
-                        : keyCountry;
+                String translatedDestination = bundle.containsKey(offer.getDestination())
+                        ? bundle.getString(offer.getDestination())
+                        : offer.getDestination();
 
-                String displayedDestination = bundle.containsKey(keyDestination)
-                        ? bundle.getString(keyDestination)
-                        : keyDestination;
+                Offer localizedOffer = new Offer();
+                localizedOffer.setCountry(translatedCountry);
+                localizedOffer.setDestination(translatedDestination);
+                localizedOffer.setStartDate(offer.getStartDate());
+                localizedOffer.setEndDate(offer.getEndDate());
+                localizedOffer.setPrice(offer.getPrice());
+                localizedOffer.setCurrency(offer.getCurrency());
 
-                String formattedPrice = nf.format(offer.getPrice());
-
-                String line = displayedCountry + " "
-                              + offer.getStartDate() + " "
-                              + offer.getEndDate() + " "
-                              + displayedDestination + " "
-                              + formattedPrice + " "
-                              + offer.getCurrency();
-
-                formattedOffers.add(line);
+                localizedOffers.add(localizedOffer);
             }
+
+            offersByLocale.put(locale, localizedOffers);
         }
 
-        return formattedOffers;
+        return offersByLocale;
     }
 
 

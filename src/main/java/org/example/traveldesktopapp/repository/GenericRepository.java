@@ -8,5 +8,6 @@ public interface GenericRepository<T> {
     T findById(Long id);
     void delete(T entity);
     void deleteAll();
-    public void resetIdSequence();
+    void resetIdSequence();
+
 }

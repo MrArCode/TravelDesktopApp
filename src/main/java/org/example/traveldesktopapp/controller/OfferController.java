@@ -34,8 +34,4 @@ public class OfferController {
         return offerService.getDistinctLocalizations();
     }
 
-    public List<String> getAllOffersFormatted(){
-        return offerService.getAllOffersFormatted();
-    }
-
 }
