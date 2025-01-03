@@ -93,15 +93,18 @@ public class StartPanel {
             }
         });
 
+        // Ustawienie kolumn tabeli
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-        dateFromColumn.setCellValueFactory(new PropertyValueFactory<>("startDate")); // Upewnij się, że nazwy pól są poprawne
+        dateFromColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         dateToColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         currencyColumn.setCellValueFactory(new PropertyValueFactory<>("currency"));
 
+        // Pobranie zlokalizowanych ofert
         offers = offerService.getAllOffersLocalized();
 
+        // Ustawienie domyślnej lokalizacji na polski
         Locale polishLocale = Locale.forLanguageTag("pl");
         setLocale(polishLocale);
     }
@@ -123,6 +126,44 @@ public class StartPanel {
 
     private void setLocale(Locale locale) {
         this.currentLocale = locale;
+
+        // Ustawienie nagłówków kolumn na podstawie Locale
+        switch (locale.getLanguage()) {
+            case "pl":
+                countryColumn.setText("Kraj");
+                dateFromColumn.setText("Data Od");
+                dateToColumn.setText("Data Do");
+                destinationColumn.setText("Destynacja");
+                priceColumn.setText("Cena");
+                currencyColumn.setText("Waluta");
+                break;
+            case "en":
+                countryColumn.setText("Country");
+                dateFromColumn.setText("Start Date");
+                dateToColumn.setText("End Date");
+                destinationColumn.setText("Destination");
+                priceColumn.setText("Price");
+                currencyColumn.setText("Currency");
+                break;
+            case "de":
+                countryColumn.setText("Land");
+                dateFromColumn.setText("Startdatum");
+                dateToColumn.setText("Enddatum");
+                destinationColumn.setText("Ziel");
+                priceColumn.setText("Preis");
+                currencyColumn.setText("Währung");
+                break;
+            default:
+                countryColumn.setText("Country");
+                dateFromColumn.setText("Start Date");
+                dateToColumn.setText("End Date");
+                destinationColumn.setText("Destination");
+                priceColumn.setText("Price");
+                currencyColumn.setText("Currency");
+                break;
+        }
+
+        // Ustaw dane w tabeli
         List<Offer> localizedOffers = offers.get(locale);
         if (localizedOffers == null) {
             showAlert(Alert.AlertType.ERROR,
