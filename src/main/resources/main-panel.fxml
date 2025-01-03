@@ -52,7 +52,7 @@
       </MenuBar>
    </top>
    <left>
-      <AnchorPane prefHeight="475.0" prefWidth="135.0" styleClass="side-bar" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="473.0" prefWidth="120.0" styleClass="side-bar" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
          <children>
             <StackPane layoutX="43.0" layoutY="213.0" prefHeight="50.0" prefWidth="50.0" styleClass="search-icon" stylesheets="@css/styles.css">
                <children>
@@ -81,17 +81,17 @@
                   </ImageView>
                </children>
             </StackPane>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="poland-icon" fitHeight="25.0" fitWidth="25.0" layoutX="56.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="poland-icon">
                <image>
                   <Image url="@css/poland.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="germany-icon" fitHeight="25.0" fitWidth="25.0" layoutX="18.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="germany-icon">
                <image>
                   <Image url="@css/germany.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="england-icon" fitHeight="25.0" fitWidth="25.0" layoutX="93.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" styleClass="england-icon">
                <image>
                   <Image url="@css/united-kingdom.png" />
                </image>
