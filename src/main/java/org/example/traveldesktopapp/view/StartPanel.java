@@ -1,5 +1,6 @@
 package org.example.traveldesktopapp.view;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import org.example.traveldesktopapp.repository.OfferRepository;
 import org.example.traveldesktopapp.service.OfferService;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class StartPanel {
@@ -95,7 +97,11 @@ public class StartPanel {
         dateFromColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         dateToColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceColumn.setCellValueFactory(cellData -> {
+            double price = cellData.getValue().getPrice();
+            String formattedPrice = formatPrice(price, currentLocale);
+            return new SimpleStringProperty(formattedPrice);
+        });
         currencyColumn.setCellValueFactory(new PropertyValueFactory<>("currency"));
 
         allOffers = offerService.findAll();
@@ -150,6 +156,10 @@ public class StartPanel {
         return bundle.containsKey(lowercased) ? bundle.getString(lowercased) : destination;
     }
 
+    private String formatPrice(double price, Locale locale) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+        return numberFormat.format(price);
+    }
 
     @FXML
     void addOnMouseClicked(MouseEvent event) {
