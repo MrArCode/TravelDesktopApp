@@ -16,16 +16,12 @@ module org.example.traveldesktopapp {
     requires java.naming;
     requires java.sql;
 
-    // Otwieranie pakietu głównego do javafx.fxml
     opens org.example.traveldesktopapp to javafx.fxml;
 
-    // Otwieranie pakietu model do org.hibernate.orm.core, javafx.base oraz javafx.fxml
     opens org.example.traveldesktopapp.model to org.hibernate.orm.core, javafx.base, javafx.fxml;
 
-    // Eksportowanie pakietów
     exports org.example.traveldesktopapp;
     exports org.example.traveldesktopapp.view;
 
-    // Otwieranie pakietu view do javafx.fxml
     opens org.example.traveldesktopapp.view to javafx.fxml;
 }
