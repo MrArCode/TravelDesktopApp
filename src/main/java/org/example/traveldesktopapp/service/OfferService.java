@@ -1,6 +1,5 @@
 package org.example.traveldesktopapp.service;
 
-import lombok.val;
 import org.example.traveldesktopapp.model.Offer;
 import org.example.traveldesktopapp.repository.OfferRepository;
 
