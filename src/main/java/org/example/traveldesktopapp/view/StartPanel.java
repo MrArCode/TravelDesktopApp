@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import org.example.traveldesktopapp.controller.OfferController;
@@ -92,6 +93,8 @@ public class StartPanel {
     @FXML
     private MenuItem aboutMenuItem;
 
+    @FXML
+    private TextField searchLabel;
 
     private Locale currentLocale;
 
@@ -124,12 +127,14 @@ public class StartPanel {
         currencyColumn.setCellValueFactory(new PropertyValueFactory<>("currency"));
 
         allOffers = offerService.findAll();
+
         setLocale(Locale.ENGLISH);
+
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     private void setLocale(Locale locale) {
         this.currentLocale = locale;
-
         ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
         updateMenuBar(bundle);
@@ -144,14 +149,12 @@ public class StartPanel {
         refreshTableView();
     }
 
-
-
     private List<Offer> translateOffers(List<Offer> offers, Locale locale) {
         List<Offer> localizedOffers = new ArrayList<>();
         for (Offer offer : offers) {
             Offer localizedOffer = new Offer();
             localizedOffer.setCountry(translateCountry(offer.getCountry(), locale));
-            localizedOffer.setDestination(translateDestination(offer.getDestination(), locale)); // Tłumaczenie destynacji
+            localizedOffer.setDestination(translateDestination(offer.getDestination(), locale));
             localizedOffer.setStartDate(offer.getStartDate());
             localizedOffer.setEndDate(offer.getEndDate());
             localizedOffer.setPrice(offer.getPrice());
@@ -183,6 +186,48 @@ public class StartPanel {
     }
 
     @FXML
+    void searchOnMouseClicked(MouseEvent event) {
+        searchLabel.setVisible(!searchLabel.isVisible());
+        if (!searchLabel.isVisible()) {
+            searchLabel.clear();
+            table.getSelectionModel().clearSelection();
+        }
+    }
+
+    @FXML
+    void serachLabelOnKeyTyped(KeyEvent event) {
+        String query = searchLabel.getText().toLowerCase();
+
+        table.getSelectionModel().clearSelection();
+
+        if (query.isEmpty()) {
+            return;
+        }
+
+        ObservableList<Offer> items = table.getItems();
+
+        for (int i = 0; i < items.size(); i++) {
+            Offer offer = items.get(i);
+
+            boolean matches =
+                    (offer.getCountry() != null && offer.getCountry().toLowerCase().contains(query))
+                    || (offer.getDestination() != null && offer.getDestination().toLowerCase().contains(query))
+                    || String.valueOf(offer.getPrice()).contains(query)
+                    || (offer.getCurrency() != null && offer.getCurrency().toLowerCase().contains(query));
+
+            if (matches) {
+                table.getSelectionModel().select(i);
+            }
+        }
+    }
+
+    private void refreshTableView() {
+        List<Offer> localizedOffers = translateOffers(allOffers, currentLocale);
+        table.setItems(FXCollections.observableArrayList(localizedOffers));
+        table.refresh();
+    }
+
+    @FXML
     void addOnMouseClicked(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
@@ -195,17 +240,6 @@ public class StartPanel {
     @FXML
     void homeOnMouseClicked(MouseEvent event) {
         System.out.println("Home clicked!");
-    }
-
-    @FXML
-    void searchOnMouseClicked(MouseEvent event) {
-        System.out.println("Search clicked!");
-    }
-
-    private void refreshTableView() {
-        List<Offer> localizedOffers = translateOffers(allOffers, currentLocale);
-        table.setItems(FXCollections.observableArrayList(localizedOffers));
-        table.refresh();
     }
 
     @FXML
@@ -233,7 +267,6 @@ public class StartPanel {
         setLocale(currentLocale);
     }
 
-
     @FXML
     void englandOnMouseClicked(MouseEvent event) {
         setLocale(Locale.ENGLISH);
@@ -258,7 +291,6 @@ public class StartPanel {
         deleteMenuItem.setText(bundle.getString("menu.edit.delete"));
         aboutMenuItem.setText(bundle.getString("menu.help.about"));
     }
-
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
