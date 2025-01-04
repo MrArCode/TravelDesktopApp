@@ -74,6 +74,25 @@ public class StartPanel {
     @FXML
     private ImageView polandButton;
 
+    @FXML
+    private Menu fileMenu;
+
+    @FXML
+    private Menu editMenu;
+
+    @FXML
+    private Menu helpMenu;
+
+    @FXML
+    private MenuItem closeMenuItem;
+
+    @FXML
+    private MenuItem deleteMenuItem;
+
+    @FXML
+    private MenuItem aboutMenuItem;
+
+
     private Locale currentLocale;
 
     @FXML
@@ -113,17 +132,16 @@ public class StartPanel {
 
         ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
+        updateMenuBar(bundle);
+
         countryColumn.setText(bundle.getString("column.country"));
         dateFromColumn.setText(bundle.getString("column.dateFrom"));
         dateToColumn.setText(bundle.getString("column.dateTo"));
         destinationColumn.setText(bundle.getString("column.destination"));
         priceColumn.setText(bundle.getString("column.price"));
         currencyColumn.setText(bundle.getString("column.currency"));
-
-
-        List<Offer> localizedOffers = translateOffers(allOffers, locale);
-        table.setItems(FXCollections.observableArrayList(localizedOffers));
     }
+
 
     private List<Offer> translateOffers(List<Offer> offers, Locale locale) {
         List<Offer> localizedOffers = new ArrayList<>();
@@ -222,6 +240,17 @@ public class StartPanel {
     void polandOnMouseClicked(MouseEvent event) {
         setLocale(Locale.forLanguageTag("pl"));
     }
+
+    private void updateMenuBar(ResourceBundle bundle) {
+        fileMenu.setText(bundle.getString("menu.file"));
+        editMenu.setText(bundle.getString("menu.edit"));
+        helpMenu.setText(bundle.getString("menu.help"));
+
+        closeMenuItem.setText(bundle.getString("menu.file.close"));
+        deleteMenuItem.setText(bundle.getString("menu.edit.delete"));
+        aboutMenuItem.setText(bundle.getString("menu.help.about"));
+    }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
