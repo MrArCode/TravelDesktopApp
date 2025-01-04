@@ -198,9 +198,16 @@ public class StartPanel {
     void searchOnMouseClicked(MouseEvent event) {
         if (currentLocale != null) {
             setLocale(currentLocale);
+            refreshTableView();
         } else {
             showAlert(Alert.AlertType.WARNING, "No Locale", "No locale selected.");
         }
+    }
+
+    private void refreshTableView() {
+        List<Offer> localizedOffers = translateOffers(allOffers, currentLocale);
+        table.setItems(FXCollections.observableArrayList(localizedOffers));
+        table.refresh();
     }
 
     @FXML
@@ -223,8 +230,11 @@ public class StartPanel {
         }
         allOffers = offerService.findAll();
         showAlert(Alert.AlertType.INFORMATION, "Upload Completed", "Files uploaded successfully.");
+        files.clear();
+        listOfFiles.setItems(FXCollections.observableArrayList(files));
         setLocale(currentLocale);
     }
+
 
     @FXML
     void englandOnMouseClicked(MouseEvent event) {
