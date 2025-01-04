@@ -140,7 +140,10 @@ public class StartPanel {
         destinationColumn.setText(bundle.getString("column.destination"));
         priceColumn.setText(bundle.getString("column.price"));
         currencyColumn.setText(bundle.getString("column.currency"));
+
+        refreshTableView();
     }
+
 
 
     private List<Offer> translateOffers(List<Offer> offers, Locale locale) {
@@ -148,7 +151,7 @@ public class StartPanel {
         for (Offer offer : offers) {
             Offer localizedOffer = new Offer();
             localizedOffer.setCountry(translateCountry(offer.getCountry(), locale));
-            localizedOffer.setDestination(translateDestination(offer.getDestination(), locale));
+            localizedOffer.setDestination(translateDestination(offer.getDestination(), locale)); // Tłumaczenie destynacji
             localizedOffer.setStartDate(offer.getStartDate());
             localizedOffer.setEndDate(offer.getEndDate());
             localizedOffer.setPrice(offer.getPrice());
@@ -170,7 +173,7 @@ public class StartPanel {
 
     private String translateDestination(String destination, Locale locale) {
         ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
-        String lowercased = destination.toLowerCase(locale);
+        String lowercased = destination.toLowerCase();
         return bundle.containsKey(lowercased) ? bundle.getString(lowercased) : destination;
     }
 
@@ -196,12 +199,7 @@ public class StartPanel {
 
     @FXML
     void searchOnMouseClicked(MouseEvent event) {
-        if (currentLocale != null) {
-            setLocale(currentLocale);
-            refreshTableView();
-        } else {
-            showAlert(Alert.AlertType.WARNING, "No Locale", "No locale selected.");
-        }
+        System.out.println("Search clicked!");
     }
 
     private void refreshTableView() {
