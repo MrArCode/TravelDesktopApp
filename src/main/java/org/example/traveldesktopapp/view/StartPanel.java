@@ -145,17 +145,11 @@ public class StartPanel {
     }
 
     private String translateDestination(String destination, Locale locale) {
-        Map<String, Map<String, String>> translations = Map.of(
-                "lake", Map.of("pl", "jezioro", "de", "See"),
-                "sea", Map.of("pl", "morze", "de", "Meer"),
-                "mountains", Map.of("pl", "góry", "de", "Berge")
-        );
-        Map<String, String> localeMap = translations.get(destination.toLowerCase());
-        if (localeMap != null) {
-            return localeMap.getOrDefault(locale.getLanguage(), destination);
-        }
-        return destination;
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+        String lowercased = destination.toLowerCase(locale);
+        return bundle.containsKey(lowercased) ? bundle.getString(lowercased) : destination;
     }
+
 
     @FXML
     void addOnMouseClicked(MouseEvent event) {
